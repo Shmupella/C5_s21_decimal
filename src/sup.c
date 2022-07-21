@@ -75,8 +75,8 @@ int get_scale(const s21_decimal a) {
 int shift_left(s21_decimal *dec, int shift) {
     int res = 0;
     int highest_bit = get_highest_bit(*dec);
-    int last_low_byte_bit;
-    int last_mid_byte_bit;
+    int last_low_byte_bit = 0;
+    int last_mid_byte_bit = 0;
     if (highest_bit + shift > 95) {
         res = 1;
     } else {
@@ -227,8 +227,8 @@ void sub_only_bits(s21_decimal dec1, s21_decimal dec2, \
     if (!s21_is_equal(dec1, dec2)) {
         int dec1_last_bit = get_highest_bit(dec1);
         int buffer = 0;
-        int dec1_curbit;
-        int dec2_curbit;
+        int dec1_curbit = 0;
+        int dec2_curbit = 0;
         for (int i = 0; i <= dec1_last_bit; i++) {
             dec1_curbit = deccheckbit(dec1, i);
             dec2_curbit = deccheckbit(dec2, i);
