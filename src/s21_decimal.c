@@ -92,7 +92,7 @@ int s21_from_decimal_to_int(s21_decimal src, int *dst) {
 }
 
 int s21_is_equal(s21_decimal dec1, s21_decimal dec2) {
-    int scale;
+    int scale = 0;
     int result = 1;
     handle_scales_equality(&dec1, &dec2, &scale);
     if (dec1.bits[0] == 0 && dec1.bits[1] == 0 && dec1.bits[2]\
@@ -138,7 +138,7 @@ int s21_truncate(s21_decimal dec1, s21_decimal *result) {
 }
 
 int s21_is_greater(s21_decimal dec1, s21_decimal dec2) {
-    int scale;
+    int scale = 0;
     int result = 1;
     handle_scales_equality(&dec1, &dec2, &scale);
     if (get_sign(dec1) && !get_sign(dec2)) {
@@ -174,7 +174,7 @@ int s21_add(s21_decimal dec1, s21_decimal dec2, s21_decimal *result) {
         res = 1;
     } else {
         nuller(result);
-        int fscale;
+        int fscale = 0;
         res = handle_scales_equality(&dec1, &dec2, &fscale);
         if (res == 0) {
             res = add_without_scale(dec1, dec2, result);
@@ -185,7 +185,7 @@ int s21_add(s21_decimal dec1, s21_decimal dec2, s21_decimal *result) {
 }
 
 int s21_sub(s21_decimal dec1, s21_decimal dec2, s21_decimal *result) {
-    int fscale;
+    int fscale = 0;
     int res = handle_scales_equality(&dec1, &dec2, &fscale);
     if (res == 0) {
         nuller(result);
@@ -304,7 +304,7 @@ int s21_div(s21_decimal dec1, s21_decimal dec2, s21_decimal *result) {
         int scale_2 = get_scale(dec2);
         dec1.bits[3] = 0;
         dec2.bits[3] = 0;
-        s21_decimal reminder, dec_int_part;
+        s21_decimal reminder = {{0, 0, 0, 0}}, dec_int_part = {{0, 0, 0, 0}};
         int division_counter = 0;
         dec_int_part = binary_div(dec1, dec2, &reminder, &ret_val);
         *result = dec_int_part;
